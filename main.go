@@ -15,23 +15,17 @@ import (
 
 func main() {
 	// create parsers
-	rootParser := argparse.NewParser("FramerCLI", "Framer Official CLI")
-	envParser := rootParser.NewCommand("env", "manage env.json file")
-	runnerParser := rootParser.NewCommand("runner", "cli build-in python runner and watcher")
-	originParser := rootParser.NewCommand("origin", "make or manage origins")
-	moduleParser := rootParser.NewCommand("module", "create or manage modules")
-
-	// add sub args
-	root.AddArgs(rootParser)
-	env.AddArgs(envParser)
-	runner.AddArgs(runnerParser)
-	origin.AddArgs(originParser)
-	module.AddArgs(moduleParser)
+	parser := argparse.NewParser("FramerCLI", "Framer Official CLI")
+	root.AddParser(parser)
+	env.AddParser(parser)
+	runner.AddParser(parser)
+	origin.AddParser(parser)
+	module.AddParser(parser)
 
 	// parse arguments
-	err := rootParser.Parse(os.Args)
+	err := parser.Parse(os.Args)
 	if err != nil {
-		fmt.Println(rootParser.Usage(err))
+		fmt.Println(parser.Usage(err))
 		return
 	}
 }
